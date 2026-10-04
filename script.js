@@ -31,9 +31,13 @@
   window.addEventListener('resize', updateUFO);
   updateUFO();
 
-  // ---- footer year ----
-  document.querySelector('footer').textContent =
-    'built with curiosity · Abha Tiwari · ' + new Date().getFullYear();
+
+// ---------- Footer year ----------
+const footerYear = document.getElementById("footer-year");
+
+if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
+}
 // ---------- Dark Mode ----------
 
 const themeBtn = document.getElementById("theme-toggle");
@@ -58,3 +62,52 @@ themeBtn.addEventListener("click", () => {
 
 });
 
+/* =========================
+   CROPWISE VIDEO MODAL
+   ========================= */
+
+const cropwiseDemoBtn = document.getElementById("cropwise-demo-btn");
+const cropwiseModal = document.getElementById("cropwise-modal");
+const cropwiseClose = document.getElementById("cropwise-close");
+const cropwiseVideo = document.getElementById("cropwise-video");
+const cropwiseBackdrop = document.querySelector(".video-modal-backdrop");
+
+const cropwiseVideoURL =
+    "https://www.youtube.com/embed/qdThTYtyWhY?autoplay=1&rel=0";
+
+function openCropwiseDemo() {
+    cropwiseVideo.src = cropwiseVideoURL;
+
+    cropwiseModal.classList.add("active");
+    cropwiseModal.setAttribute("aria-hidden", "false");
+
+    document.body.style.overflow = "hidden";
+}
+
+function closeCropwiseDemo() {
+    cropwiseModal.classList.remove("active");
+    cropwiseModal.setAttribute("aria-hidden", "true");
+
+    // Stop the YouTube video when the modal closes
+    cropwiseVideo.src = "";
+
+    document.body.style.overflow = "";
+}
+
+if (cropwiseDemoBtn) {
+    cropwiseDemoBtn.addEventListener("click", openCropwiseDemo);
+}
+
+if (cropwiseClose) {
+    cropwiseClose.addEventListener("click", closeCropwiseDemo);
+}
+
+if (cropwiseBackdrop) {
+    cropwiseBackdrop.addEventListener("click", closeCropwiseDemo);
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && cropwiseModal.classList.contains("active")) {
+        closeCropwiseDemo();
+    }
+});
